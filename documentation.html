@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>jPopulator</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Populate your java beans easily with random data!">
+    <meta name="author" content="Mahmoud Ben Hassine">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/bean.ico"/>
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/offcanvas.css" rel="stylesheet" media="screen">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/idea.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top navbar-default" role="navigation">
+
+    <a href="https://github.com/benas/jPopulator"><img style="position: absolute; top: 0; right: 0; border: 0;" src="img/forkme.png" alt="Fork me on GitHub"></a>
+
+    <div class="container">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html"><i class="fa fa-rocket"></i> jPopulator</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <p class="navbar-text pull-right">Version: 1.0</p>
+            <ul class="nav navbar-nav">
+                <li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="gettingStarted.html"><i class="fa fa-folder-open"></i> Getting started</a></li>
+                <li class="active"><a href="documentation.html"><i class="fa fa-book"></i> Documentation</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+<div class="row row-offcanvas row-offcanvas-right">
+
+<div class="col-xs-12 col-sm-9">
+
+    <div class="row">
+
+        <h1>1. jPopulator Key API</h1>
+
+        <p>The central peace of jPopulator is the <code>Populator</code> interface :</p>
+
+<pre><code class="java">public interface Populator {
+
+    /**
+    * Populate a java bean instance for the given type.
+    *
+    * @param type the type for which a java bean instance will be populated
+    * @return a populated instance of the given type
+    */
+    Object populateBean(Class type);
+
+    /**
+    * Populate a random number of java bean instances for the given type.
+    *
+    * @param type the type for which java bean instances will be populated
+    * @return a list of populated instances of the given type
+    */
+    List&lt;Object&gt; populateBeans(Class type);
+
+    /**
+    * Populate a fixed number of java bean instances for the given type.
+    *
+    * @param type the type for which java bean instances will be populated
+    * @param size the number of instances to populate
+    * @return a list of populated instances of the given type
+    */
+    List&lt;Object&gt; populateBeans(Class type, int size);
+
+}
+</code></pre>
+
+        <p>You can populate a single instance or a random or fixed number of instances of any Java type.
+            jPopulator will introspect your object type hierarchy, generate an instance for each nested bean and populate it with random data.</p>
+
+        <p>jPopulator comes with a default implementation of the <code>Populator</code> interface that you can create using the <code>PopulatorBuilder</code> API :</p>
+
+<pre><code class="java">Populator populator = new PopulatorBuilder().build();</code></pre>
+
+    </div>
+
+    <div class="row">
+        <h1>2. Controlling the randomness</h1>
+
+        <p>In this section, you will see how it is possible to control how jPopulator generates random values. Let's continue with the <code>Person</code> class hierarchy:</p>
+
+        <p class="text-center"><img src="img/person.png"/></p>
+
+        <p>By default, jPopulator generates random values according to field type. For example, the <code>String</code> field named <code>firstName</code> of the <code>Person</code> class will be set to a random String, say <code>dfrtgyhu</code>,
+            which is completely meaningless since it is generated randomly.</p>
+
+        <p>You may want to generate random data that would be meaningful according to the field it is assigned to.
+            For instance, how to tell jPopulator that the <code>firstName</code> field is actually a first name and its value should be randomly generated from the list <code>{"John","Brad","Tommy"}</code> ?</p>
+
+        <p>This is where randomizers come to play. A randomizer is an implementation of the <code>Randomizer&lt;T&gt;</code> interface that controls how to generate random values for the type T :</p>
+
+<pre><code class="java">public interface Randomizer&lt;T&gt; {
+
+    /**
+    * Generate a random value for the given type.
+    *
+    * @return a random value for the given type
+    */
+    public T getRandomValue();
+
+}
+</code></pre>
+
+        <p>The following is a custom randomizer implementation that generates first names from a resource bundle :</p>
+
+<pre><code class="java">public class FirstNameRandomizer implements Randomizer&lt;String&gt; {
+
+    private Random random;
+
+    /**
+    * First names array from which the random value should be generated.
+    */
+    private String[] firstNames;
+
+    public FirstNameRandomizer() {
+        this.random = new Random();
+        this.firstNames = ResourceBundle.getBundle("io/github/benas/jpopulator/data/data")
+                                        .getString("firstNames").split(",");
+    }
+
+    @Override
+    public String getRandomValue() {
+        return firstNames[random.nextInt(firstNames.length)];
+    }
+
+}
+</code></pre>
+
+        <p>Now, to register this custom randomizer within jPopulator, you can use the <code>PopulatorBuilder</code> API as follows:</p>
+
+<pre><code class="java">Populator populator = new PopulatorBuilder()
+        .registerRandomizer(Person.class, String.class, "firstName", new FirstNameRandomizer())
+        .build();
+</code></pre>
+
+        <p>This tells jPopulator to generate random values for the <code>String</code> field named <code>firstName</code> declared in the <code>Person</code> class using the <code>FirstNameRandomizer</code>.</p>
+
+        <p>jPopulator comes with several built-in randomizers for commom attribures such as first name, last name, email, city, country, etc.
+            These randomizers can be found in the <a href="https://github.com/benas/jPopulator/tree/master/src/main/java/io/github/benas/jpopulator/randomizers"><code>io.github.benas.jpopulator.randomizers</code></a> package.
+            Of course, as we have just seen, you can provide your custom randomizers and use them with jPopulator.</p>
+
+
+    </div>
+
+    <div class="row">
+        <h1>3. I18N Support for random values</h1>
+
+        <p>jPopulator also supports internationalized values for the built-in randomizers since it loads them from the resource bundle <code>io/github/benas/jpopulator/data/data.properties</code>.
+            This means you can simply put a <code>data_xx_YY.properties</code> with your locale in the the package <code>io/github/benas/jpopulator/data</code> of your classpath and jPopulator will use it automatically.</p>
+
+    </div>
+
+    <div class="row">
+        <h1>4. Supported types</h1>
+
+        <h3 id="javatypes">4.1 Java types</h3>
+
+        <p>By default, jPopulator can generate random values for all Java built-in types (primitive and boxed) : int, long, String, Boolean, etc</p>
+
+        <p>Support for third party types (Joda time, Apache commons, etc) is planned for a future release. Any contribution is welcome!</p>
+
+        <h3 id="enumerationtypes">4.2 Enumeration types</h3>
+
+        <p>Enumeration types are also supported. In the example above, jPopulator generated random values for enum type <code>Gender</code>.
+            jPopulator will pick up a random value from the enumeration values set and set it to the field of the enumeration type.</p>
+
+        <h3 id="arraysandcollectiontypes">4.3 Arrays and Collection types</h3>
+
+        <p>jPopulator can also handle arrays and collection types defined in the [Java Collections Framework][] (Set, List, Map, etc).</p>
+
+        <p>For the moment, jPopulator generates empty arrays and collections. Populating collections is also planned for a future release. Any contribution is welcome!</p>
+
+    </div>
+
+</div>
+
+<div class="col-xs-6 col-sm-3 sidebar-offcanvas affix-top" id="sidebar" role="navigation">
+    <div class="list-group">
+        <a href="index.html" class="list-group-item"><i class="fa fa-home"></i> Home</a>
+        <a href="gettingStarted.html" class="list-group-item"><i class="fa fa-folder-open"></i> Getting started</a>
+        <a href="documentation.html" class="list-group-item active"><i class="fa fa-book"></i> Documentation</a>
+    </div>
+</div>
+
+</div>
+
+<hr>
+
+<footer>
+    <div class="container">
+        <p class="pull-right"><a href="#"><i class="fa fa-arrow-up"></i> Back to top</a></p>
+
+            <p>jPopulator is maintained by <a href="mailto:md.benhassine@gmail.com?subject=[jPopulator]"><i
+                    class="fa fa-envelope"></i> benas</a> at <a href="https://github.com/benas/jpopulator"><i
+                class="fa fa-github-alt"></i> Github</a></p>
+    </div>
+</footer>
+
+</div>
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/offcanvas.js"></script>
+<script src="js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>
+

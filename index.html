@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>jPopulator</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Populate your java beans easily with random data!">
+    <meta name="author" content="Mahmoud Ben Hassine">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/bean.ico"/>
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/offcanvas.css" rel="stylesheet" media="screen">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/idea.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top navbar-default" role="navigation">
+
+    <a href="https://github.com/benas/jPopulator"><img style="position: absolute; top: 0; right: 0; border: 0;" src="img/forkme.png" alt="Fork me on GitHub"></a>
+
+    <div class="container">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html"><i class="fa fa-rocket"></i> jPopulator</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <p class="navbar-text pull-right">Version: 1.0</p>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="gettingStarted.html"><i class="fa fa-folder-open"></i> Getting started</a></li>
+                <li><a href="documentation.html"><i class="fa fa-book"></i> Documentation</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="row row-offcanvas row-offcanvas-right">
+
+        <div class="col-xs-12 col-sm-9">
+
+            <div class="row">
+
+                <h2 >What is jPopulator?</h2>
+
+                <p>jPopulator is a java tool that allows you to populate java beans with random data. This can be very useful in development/test phases when you need to generate fake data,
+                    especially when your java beans type hierarchy is deep, since it populates recursively all the nested types of a given java bean.
+                    Let's see an example, suppose you have the following classes:</p>
+
+                <p class="text-center"><img src="img/person.png"/></p>
+
+                <p>If you want to populate a <code>Person</code> bean with jPopulator, you simply write this:</p>
+
+<pre><code class="java">Populator populator = new PopulatorBuilder().build();
+Person person = (Person) populator.populateBean(Person.class);
+</code></pre>
+
+                <p>And voila! jPopulator will introspect the <code>Person</code> type hierarchy, generate an instance for each nested bean and populate it with random data.</p>
+
+                <p><strong>Without</strong> jPopulator, you would write the following code:</p>
+
+<pre><code class="java">Street street = new Street(12, (byte) 1, "Oxford street");
+Address address = new Address(street, "123456", "London", "United Kingdom");
+Person person = new Person("Foo", "Bar", "foo.bar@gmail.com", Gender.MALE, address);
+</code></pre>
+
+                <p>And if these classes do not provide constructors with parameters (may be some legacy beans you don't have the control over), you would write:</p>
+
+<pre><code class="java">Street street = new Street();
+street.setNumber(12);
+street.setType((byte) 1);
+street.setName("Oxford street");
+
+Address address = new Address();
+address.setStreet(street);
+address.setZipCode("123456");
+address.setCity("London");
+address.setCountry("United Kingdom");
+
+Person person = new Person();
+person.setFirstName("Foo");
+person.setLastName("Bar");
+person.setEmail("foo.bar@gmail.com");
+person.setGender(Gender.MALE);
+person.setAddress(address);
+</code></pre>
+
+                <p>As you can see, jPopulator can save you from writing all this bean populating code often written "by hand".</p>
+
+            </div>
+
+            <div class="row">
+
+                <h1>License</h1>
+
+                <p>jPopulator is released under the <a href="http://opensource.org/licenses/mit-license.php/" target="_blank">MIT License</a>.</p>
+            </div>
+
+        </div>
+
+        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+            <div class="list-group">
+                <a href="index.html" class="list-group-item active"><i class="fa fa-home"></i> Home</a>
+                <a href="gettingStarted.html" class="list-group-item"><i class="fa fa-folder-open"></i> Getting started</a>
+                <a href="documentation.html" class="list-group-item"><i class="fa fa-book"></i> Documentation</a>
+            </div>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <footer>
+        <div class="container">
+            <p class="pull-right"><a href="#"><i class="fa fa-arrow-up"></i> Back to top</a></p>
+
+            <p>jPopulator is maintained by <a href="mailto:md.benhassine@gmail.com?subject=[jPopulator]"><i
+                    class="fa fa-envelope"></i> benas</a> at <a href="https://github.com/benas/jpopulator"><i
+                    class="fa fa-github-alt"></i> Github</a></p>
+        </div>
+    </footer>
+
+</div>
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/offcanvas.js"></script>
+<script src="js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>
+
