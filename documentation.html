@@ -104,12 +104,16 @@
 
 <pre><code class="java">Populator populator = new PopulatorBuilder().build();</code></pre>
 
+        <h4 id="headsup"><span class="label label-primary">Heads up!</span></h4>
+
+        <p>The type of the object to populate must provide a default constructor and a public setter for each field (so that jPopulator can instantiate it and set random values to its fields). If your object is a <a href="http://en.wikipedia.org/wiki/JavaBeans">standard java bean</a>, default constructor and setters would be already defined in your object. </p>
+
     </div>
 
     <div class="row">
         <h1>2. Controlling the randomness</h1>
 
-        <p>In this section, you will see how it is possible to control how jPopulator generates random values. Let's continue with the <code>Person</code> class hierarchy:</p>
+        <p>In this section, you will see how it is possible to control how jPopulator generates random values. Let's consider the following classes :</p>
 
         <p class="text-center"><img src="img/person.png"/></p>
 
