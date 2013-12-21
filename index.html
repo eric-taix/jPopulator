@@ -63,10 +63,26 @@
 
             <div class="row">
 
-                <h2 >What is jPopulator?</h2>
+                <h1>Introduction</h1>
 
-                <p>jPopulator is a java tool that allows you to populate java beans with random data. This can be very useful in development/test phases when you need to generate fake data,
-                    especially when your java beans type hierarchy is deep, since it populates <strong>recursively</strong> all the nested types of a given java bean.
+                <p>Testing applications against random input, also known as <a href="http://en.wikipedia.org/wiki/Monkey_test" target="_blank">Monkey Tests</a>, is an essential step to improve their stability and robustness.</p>
+
+                <p>There are many use cases where we need to generate random data during tests such as :</p>
+                <ul>
+                    <li>Generating random model to test view rendering in a MVC web application</li>
+                    <li>Generating random form input to test form validation</li>
+                    <li>etc</li>
+                </ul>
+
+                <p>Generating random data is a tedious task, especially when the domain model involves many classes. This is where jPopulator comes to play, to help you populating your domain objects easily with random data.</p>
+
+                <p>Many production bugs are due to processing of unexpected data and jPopulator can help you to detect these nasty bugs earlier during development/test phases.</p>
+
+                <p>So if you love Monkey tests, jPopulator will be your best friend!</p>
+
+                <h1>What is jPopulator?</h1>
+
+                <p>jPopulator is a java tool that allows you to populate java beans with random data. It can be very useful when your domain model involves many classes, since it populates <strong>recursively</strong> all the "related" types of a given java bean.
                     Let's see an example, suppose you have the following classes:</p>
 
                 <p class="text-center"><img src="img/person.png"/></p>
