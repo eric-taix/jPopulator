@@ -105,9 +105,9 @@
 <pre><code class="java">Populator populator = new PopulatorBuilder().build();</code></pre>
 
         <h4 id="headsup"><span class="label label-primary">Heads up!</span></h4>
-
-        <p>The type of the object to populate must provide a default constructor and a public setter for each field (so that jPopulator can instantiate it and set random values to its fields). If your object is a <a href="http://en.wikipedia.org/wiki/JavaBeans">standard java bean</a>, default constructor and setters would be already defined in your object. </p>
-
+        <div class="alert alert-warning">
+            <p>The type of the object to populate must provide a default constructor and a public setter for each field (so that jPopulator can instantiate it and set random values to its fields). If your object is a <a href="http://en.wikipedia.org/wiki/JavaBeans" class="alert-link">standard java bean</a>, default constructor and setters would be already defined in your object. </p>
+        </div>
     </div>
 
     <div class="row">
@@ -202,7 +202,7 @@
 
         <h3 id="arraysandcollectiontypes">4.3 Arrays and Collection types</h3>
 
-        <p>jPopulator can also handle arrays and collection types defined in the [Java Collections Framework][] (Set, List, Map, etc).</p>
+        <p>jPopulator can also handle arrays and collection types defined in the <a href="http://docs.oracle.com/javase/tutorial/collections/">Java Collections Framework</a> (Set, List, Map, etc).</p>
 
         <p>For the moment, jPopulator generates empty arrays and collections. Populating collections is also planned for a future release. Any contribution is welcome!</p>
 
