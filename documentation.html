@@ -31,8 +31,6 @@
 
 <div class="navbar navbar-fixed-top navbar-default" role="navigation">
 
-    <a href="https://github.com/benas/jPopulator"><img style="position: absolute; top: 0; right: 0; border: 0;" src="img/forkme.png" alt="Fork me on GitHub"></a>
-
     <div class="container">
 
         <div class="navbar-header">
@@ -45,7 +43,7 @@
             <a class="navbar-brand" href="index.html"><i class="fa fa-rocket"></i> jPopulator</a>
         </div>
         <div class="collapse navbar-collapse">
-            <p class="navbar-text pull-right">Version: 1.0.0</p>
+            <p class="navbar-text pull-right">Version: 1.0.1</p>
             <ul class="nav navbar-nav">
                 <li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
                 <li><a href="gettingStarted.html"><i class="fa fa-folder-open"></i> Getting started</a></li>
@@ -65,7 +63,7 @@
 
         <h1>1. jPopulator Key API</h1>
 
-        <p>The central peace of jPopulator is the <code>Populator</code> interface :</p>
+        <p>The central peace of jPopulator is the <code>Populator</code> interface:</p>
 
 <pre><code class="java">public interface Populator {
 
@@ -75,7 +73,7 @@
     * @param type the type for which a java bean instance will be populated
     * @return a populated instance of the given type
     */
-    Object populateBean(Class type);
+    &lt;T&gt; T populateBean(final Class&lt;T&gt; type);
 
     /**
     * Populate a random number of java bean instances for the given type.
@@ -83,7 +81,7 @@
     * @param type the type for which java bean instances will be populated
     * @return a list of populated instances of the given type
     */
-    List&lt;Object&gt; populateBeans(Class type);
+    &lt;T&gt; List&lt;T&gt; populateBeans(final Class&lt;T&gt; type);
 
     /**
     * Populate a fixed number of java bean instances for the given type.
@@ -92,7 +90,7 @@
     * @param size the number of instances to populate
     * @return a list of populated instances of the given type
     */
-    List&lt;Object&gt; populateBeans(Class type, int size);
+    &lt;T&gt; List&lt;T&gt; populateBeans(final Class&lt;T&gt; type, int size);
 
 }
 </code></pre>
@@ -106,7 +104,7 @@
 
         <h4 id="headsup"><span class="label label-primary">Heads up!</span></h4>
         <div class="alert alert-warning">
-            <p>The type of the object to populate must provide a default constructor and a public setter for each field (so that jPopulator can instantiate it and set random values to its fields). If your object is a <a href="http://en.wikipedia.org/wiki/JavaBeans" class="alert-link">standard java bean</a>, default constructor and setters would be already defined in your object. </p>
+            <p>The type of the object to populate must provide a default constructor and a public setter for each field (so that jPopulator can instantiate it and set random values to its fields). If your object is a <a href="http://en.wikipedia.org/wiki/JavaBeans" target="_blank" class="alert-link">standard java bean</a>, default constructor and setters would be already defined in your object. </p>
         </div>
     </div>
 
@@ -202,7 +200,7 @@
 
         <h3 id="arraysandcollectiontypes">4.3 Arrays and Collection types</h3>
 
-        <p>jPopulator can also handle arrays and collection types defined in the <a href="http://docs.oracle.com/javase/tutorial/collections/">Java Collections Framework</a> (Set, List, Map, etc).</p>
+        <p>jPopulator can also handle arrays and collection types defined in the <a href="http://docs.oracle.com/javase/tutorial/collections/" target="_blank">Java Collections Framework</a> (Set, List, Map, etc).</p>
 
         <p>For the moment, jPopulator generates empty arrays and collections. Populating collections is also planned for a future release. Any contribution is welcome!</p>
 
@@ -226,9 +224,8 @@
     <div class="container">
         <p class="pull-right"><a href="#"><i class="fa fa-arrow-up"></i> Back to top</a></p>
 
-            <p>jPopulator is maintained by <a href="mailto:md.benhassine@gmail.com?subject=[jPopulator]"><i
-                    class="fa fa-envelope"></i> benas</a> at <a href="https://github.com/benas/jpopulator"><i
-                class="fa fa-github-alt"></i> Github</a></p>
+        <p>jPopulator is maintained by <a href="http://www.mahmoudbenhassine.com" target="_blank">Mahmoud Ben Hassine</a>
+            at <a href="https://github.com/benas/jpopulator"><i class="fa fa-github-alt"></i> Github</a></p>
     </div>
 </footer>
 

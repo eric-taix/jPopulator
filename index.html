@@ -31,8 +31,6 @@
 
 <div class="navbar navbar-fixed-top navbar-default" role="navigation">
 
-    <a href="https://github.com/benas/jPopulator"><img style="position: absolute; top: 0; right: 0; border: 0;" src="img/forkme.png" alt="Fork me on GitHub"></a>
-
     <div class="container">
 
         <div class="navbar-header">
@@ -45,7 +43,7 @@
             <a class="navbar-brand" href="index.html"><i class="fa fa-rocket"></i> jPopulator</a>
         </div>
         <div class="collapse navbar-collapse">
-            <p class="navbar-text pull-right">Version: 1.0.0</p>
+            <p class="navbar-text pull-right">Version: 1.0.1</p>
             <ul class="nav navbar-nav">
                 <li class="active"><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
                 <li><a href="gettingStarted.html"><i class="fa fa-folder-open"></i> Getting started</a></li>
@@ -90,7 +88,7 @@
                 <p>If you want to populate a <code>Person</code> bean with jPopulator, you simply write this:</p>
 
 <pre><code class="java">Populator populator = new PopulatorBuilder().build();
-Person person = (Person) populator.populateBean(Person.class);
+Person person = populator.populateBean(Person.class);
 </code></pre>
 
                 <p>And voila! jPopulator will introspect the <code>Person</code> type hierarchy, generate an instance for each nested bean and populate it with random data.</p>
@@ -152,9 +150,8 @@ person.setAddress(address);
         <div class="container">
             <p class="pull-right"><a href="#"><i class="fa fa-arrow-up"></i> Back to top</a></p>
 
-            <p>jPopulator is maintained by <a href="mailto:md.benhassine@gmail.com?subject=[jPopulator]"><i
-                    class="fa fa-envelope"></i> benas</a> at <a href="https://github.com/benas/jpopulator"><i
-                    class="fa fa-github-alt"></i> Github</a></p>
+            <p>jPopulator is maintained by <a href="http://www.mahmoudbenhassine.com" target="_blank">Mahmoud Ben Hassine</a>
+                at <a href="https://github.com/benas/jpopulator"><i class="fa fa-github-alt"></i> Github</a></p>
         </div>
     </footer>
 
